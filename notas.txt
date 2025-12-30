@@ -1,0 +1,40 @@
+Vamos a plantear el problema de nuevo, me di cuenta que el proyecto puede ser mas rapido, pero con una buena arquitectura para que mejore el rendimiento.
+
+Puntos claves
+    1.- Wialon permite crear crear repetidores donde le adigno las unidades a ese repetidor, lo mismo que hace alpha
+    2.- Mediante api de wialon permite ver los repetidores creados con las unidades asignadas
+    3.- La api tambiente permite ver la data de las unidades.
+
+Api para buscar los repetidores con la id de las unidades
+
+
+    Login para poder obtener el sid, una vez que obtenga el sid ya puedo hacer cualquier peticion a la Api de Wialon
+
+    https://hst-api.wialon.com/wialon/ajax.html?svc=token/login
+    params{"token":"ya tengo el token"}
+
+    Repetidor
+    Metodo HTTPS: POST
+    https://hst-api.wialon.com/wialon/ajax.html?svc=core/search_items&params={"spec":{"itemsType":"avl_retranslator","propName":"sys_name","propValueMask":"*","sortType":"sys_name"},"force":1,"flags":16777215,"from":0,"to":0}&sid="generado con el token de wialon"
+
+    Buscar por nombre del repetidor:
+    Metodo HTTPS: POST
+    https://hst-api.wialon.com/wialon/ajax.html?svc=core/search_items&params={"spec":{"itemsType":"avl_retranslator","propName":"sys_name","propValueMask":"Test Tracker Frida","sortType":"sys_name"},"force":1,"flags":256,"from":0,"to":0}&sid="generado con el token de wialon"
+
+
+    Buscar todos los repetidores disponibles
+    Metodo HTTPS: POST
+    https://hst-api.wialon.com/wialon/ajax.html?svc=core/search_items&params={"spec":{"itemsType":"avl_retranslator","propName":"sys_name","propValueMask":"*","sortType":"sys_name"},"force":1,"flags":257,"from":0,"to":0}&sid="generado con el token de wialon"
+
+
+    Buscar para mostrar todas las unidades
+    https://hst-api.wialon.com/wialon/ajax.html?svc=core/search_items&params={"spec":{"itemsType":"avl_unit","propName":"sys_name","propValueMask":"*","sortType":"sys_name"},"force":1,"flags":1,"from":0,"to":0}&sid="generado con el token de wialon"
+
+
+    Me falta agregar el controller para la auth
+
+
+    Credenciales para iniciar sesión 
+
+    "username": "Admin Tracker",
+    "password": "admin123"
