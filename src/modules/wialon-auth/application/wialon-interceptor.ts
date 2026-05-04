@@ -34,19 +34,22 @@ export class WialonSidInterceptor implements NestInterceptor {
 
     return next.handle().pipe(
       // Capturar errores y verificar si es un error de SID inválido
-      catchError(async (error) => {
+      catchError((error: unknown) => {
         // Si es un error de Wialon indicando SID inválido, renovar e intentar de nuevo
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const isWialonError = error?.response?.error === 1;
+        const response = (error as { response?: { error?: number } }).response;
+        const isWialonError = response?.error === 1;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (isWialonError && user && user.userId) {
           // Forzar renovación del SID
-          const newSid = await this.wialonSessionService.refreshWialonSession(
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-            user.userId,
-          );
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          request.wialonSid = newSid;
+          void this.wialonSessionService
+            .refreshWialonSession(
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+              user.userId,
+            )
+            .then((newSid) => {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              request.wialonSid = newSid;
+            });
 
           // Nota: Aquí podrías implementar un retry automático si lo necesitas
           // Por ahora solo renovamos el SID para la siguiente petición
