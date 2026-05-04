@@ -8,6 +8,8 @@ export class UserMapper {
       userOrm.username,
       userOrm.password,
       String(userOrm.isActive ?? true),
+      userOrm.wialonSid,
+      userOrm.wialonSidExpiry,
     );
   }
 
@@ -19,6 +21,8 @@ export class UserMapper {
     orm.username = user.username;
     orm.password = user.password;
     orm.isActive = user.isActive === 'true';
+    orm.wialonSid = user.wialonSid ?? null;
+    orm.wialonSidExpiry = user.wialonSidExpiry ?? null;
     return orm;
   }
 }

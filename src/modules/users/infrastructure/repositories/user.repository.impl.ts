@@ -21,4 +21,20 @@ export class UserRepositoryImpl implements UserRepository {
     const saved = await this.ormRepo.save(entity);
     return UserMapper.toDomain(saved);
   }
+
+  async findById(id: string): Promise<User | null> {
+    const userOrm = await this.ormRepo.findOne({ where: { id } });
+    return userOrm ? UserMapper.toDomain(userOrm) : null;
+  }
+
+  async updateWialonSession(
+    userId: string,
+    sid: string,
+    expiryDate: Date,
+  ): Promise<void> {
+    await this.ormRepo.update(userId, {
+      wialonSid: sid,
+      wialonSidExpiry: expiryDate,
+    });
+  }
 }
