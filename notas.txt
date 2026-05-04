@@ -34,7 +34,20 @@ Api para buscar los repetidores con la id de las unidades
     Me falta agregar el controller para la auth
 
 
-    Credenciales para iniciar sesión 
+    Credenciales para iniciar sesión
 
     "username": "Admin Tracker",
     "password": "admin123"
+
+    4152 3142 8502 3639
+
+    X6158065
+
+
+    {
+            "nm": "863238077362731",
+            "cls": 2,
+            "id": 402245387,
+            "mu": 0,
+            "uacl": 34965193555967
+        },
