@@ -310,12 +310,154 @@ Estados:
 - `active`
 - `replaced`
 
+### GPS: Agenda de Citas
+
+Modulo de agenda interna para crear disponibilidad por proveedor y gestionar citas de instalacion.
+
+#### Crear slot disponible
+
+```http
+POST /gps/appointment-slots
+```
+
+Body:
+
+```json
+{
+  "provider": "Proveedor GPS",
+  "startsAt": "2026-05-10T15:00:00.000Z",
+  "endsAt": "2026-05-10T16:00:00.000Z",
+  "location": "Sucursal CDMX",
+  "capacity": 1
+}
+```
+
+#### Listar slots
+
+```http
+GET /gps/appointment-slots?provider=Proveedor%20GPS&from=2026-05-01T00:00:00.000Z&to=2026-05-31T23:59:59.000Z&availableOnly=true&page=1&limit=50
+```
+
+#### Actualizar slot
+
+```http
+PATCH /gps/appointment-slots/:id
+```
+
+Body:
+
+```json
+{
+  "startsAt": "2026-05-10T16:00:00.000Z",
+  "endsAt": "2026-05-10T17:00:00.000Z",
+  "location": "Sucursal CDMX",
+  "capacity": 2,
+  "isActive": true
+}
+```
+
+No se permite bajar `capacity` por debajo de las citas ya reservadas.
+
+#### Crear cita
+
+```http
+POST /gps/appointments
+```
+
+Body:
+
+```json
+{
+  "vin": "3VW1E2JMXGM123456",
+  "provider": "Proveedor GPS",
+  "slotId": "uuid-slot",
+  "customerName": "Juan Perez",
+  "customerPhone": "5555555555",
+  "customerEmail": "cliente@email.com",
+  "notes": "Instalacion en agencia"
+}
+```
+
+La cita consume cupo del slot. Si el slot no tiene cupo, responde `409 SLOT_NOT_AVAILABLE`.
+
+#### Listar citas
+
+```http
+GET /gps/appointments?vin=3VW1E2JMXGM123456&provider=Proveedor%20GPS&status=scheduled&page=1&limit=50
+```
+
+Estados:
+
+- `scheduled`
+- `cancelled`
+- `rescheduled`
+- `completed`
+
+#### Ver cita
+
+```http
+GET /gps/appointments/:id
+```
+
+#### Reagendar cita
+
+```http
+PATCH /gps/appointments/:id/reschedule
+```
+
+Body:
+
+```json
+{
+  "slotId": "nuevo-uuid-slot",
+  "notes": "Cliente solicita nuevo horario"
+}
+```
+
+Libera cupo del slot anterior y reserva cupo del nuevo.
+
+#### Cancelar cita
+
+```http
+PATCH /gps/appointments/:id/cancel
+```
+
+Body opcional:
+
+```json
+{
+  "notes": "Cliente cancela"
+}
+```
+
+Libera el cupo del slot.
+
+#### Completar cita
+
+```http
+PATCH /gps/appointments/:id/complete
+```
+
+Body:
+
+```json
+{
+  "serialNumber": "863238077362731",
+  "installedAt": "2026-05-10T16:00:00.000Z",
+  "notes": "Instalacion completada"
+}
+```
+
+Al completar, la API valida el `serialNumber` en Wialon y crea la instalacion GPS en `gps_installations`. Si falla Wialon o la instalacion, la cita no queda completada.
+
 ## Tablas Principales
 
 - `user`: usuarios, password hash y sesion Wialon asociada.
 - `gps_command_audits`: auditoria de comandos enviados a Wialon.
 - `no_report_snapshots`: snapshots de unidades sin reporte.
 - `gps_installations`: instalaciones GPS por VIN.
+- `gps_appointment_slots`: disponibilidad de citas por proveedor.
+- `gps_installation_appointments`: citas de instalacion GPS.
 
 ## Errores Frecuentes
 
@@ -356,6 +498,9 @@ No se encontro la unidad en Wialon por el identificador usado. Validar numero de
 7. `POST /gps/installations`
 8. `GET /gps/installations/<vin>`
 9. `GET /gps/no-reporta?minMinutes=60&page=1&limit=50`
+10. `POST /gps/appointment-slots`
+11. `POST /gps/appointments`
+12. `PATCH /gps/appointments/<id>/complete`
 
 ## Estado Funcional
 
@@ -370,11 +515,11 @@ Cubierto actualmente:
 - Bitacora de no reporte por snapshot.
 - Recuperacion con ubicacion actual o ubicaciones frecuentes.
 - Registro manual de instalaciones GPS.
+- Agenda interna de citas de instalacion.
 
 Pendiente si el proveedor lo requiere:
 
 - Webhook/API para recibir instalaciones automaticamente.
 - Carga por archivo de instalaciones.
 - Catalogo formal de proveedores.
-- Agenda de citas de instalacion.
 - Migraciones TypeORM para produccion.
