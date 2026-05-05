@@ -9,6 +9,7 @@ API backend en NestJS para integrar operaciones GPS con Wialon: autenticacion, s
 - PostgreSQL
 - TypeORM
 - JWT
+- Swagger / OpenAPI
 - Wialon API
 - pnpm / npm scripts
 
@@ -59,6 +60,12 @@ La API queda disponible por defecto en:
 
 ```text
 http://localhost:3000
+```
+
+La documentacion Swagger queda disponible en:
+
+```text
+http://localhost:3000/api/docs
 ```
 
 ## Scripts
