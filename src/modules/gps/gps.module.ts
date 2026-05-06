@@ -18,6 +18,7 @@ import { GpsAppointmentSlotOrmEntity } from './infrastructure/entities/gps-appoi
 import { GpsCommandAuditOrmEntity } from './infrastructure/entities/gps-command-audit.orm-entity';
 import { GpsInstallationAppointmentOrmEntity } from './infrastructure/entities/gps-installation-appointment.orm-entity';
 import { GpsInstallationOrmEntity } from './infrastructure/entities/gps-installation.orm-entity';
+import { NoReportSnapshotRunOrmEntity } from './infrastructure/entities/no-report-snapshot-run.orm-entity';
 import { NoReportSnapshotOrmEntity } from './infrastructure/entities/no-report-snapshot.orm-entity';
 
 @Module({
@@ -29,6 +30,7 @@ import { NoReportSnapshotOrmEntity } from './infrastructure/entities/no-report-s
       GpsCommandAuditOrmEntity,
       GpsInstallationAppointmentOrmEntity,
       GpsInstallationOrmEntity,
+      NoReportSnapshotRunOrmEntity,
       NoReportSnapshotOrmEntity,
     ]),
   ],

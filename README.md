@@ -38,6 +38,8 @@ WIALON_SYSTEM_USER_ID=uuid_del_usuario
 # Opcionales
 WIALON_REQUEST_TIMEOUT_MS=30000
 WIALON_COMMAND_TIMEOUT_SECONDS=60
+WIALON_NO_REPORT_UNIT_FLAGS=2097153
+WIALON_NO_REPORT_BATCH_SIZE=100
 ```
 
 > Nota: el proyecto usa `synchronize: true` en TypeORM. Esto facilita desarrollo porque crea/ajusta tablas automaticamente, pero no es recomendable para produccion sin migraciones controladas.
@@ -67,6 +69,55 @@ La documentacion Swagger queda disponible en:
 ```text
 http://localhost:3000/api/docs
 ```
+
+## Docker Para VPS
+
+El proyecto incluye una imagen multi-stage de produccion con pnpm:
+
+- `Dockerfile`
+- `.dockerignore`
+- `docker-compose.yml`
+- `.env.production.example`
+
+Crear el archivo de variables reales:
+
+```bash
+cp .env.production.example .env.production
+```
+
+Editar `.env.production` con los valores reales de base de datos, JWT y Wialon.
+
+Levantar API + PostgreSQL:
+
+```bash
+docker compose up -d --build
+```
+
+Ver logs:
+
+```bash
+docker compose logs -f api
+```
+
+Detener:
+
+```bash
+docker compose down
+```
+
+La API quedara disponible en:
+
+```text
+http://localhost:3000
+```
+
+Swagger:
+
+```text
+http://localhost:3000/api/docs
+```
+
+> Nota de produccion: `TYPEORM_SYNCHRONIZE=true` permite crear/actualizar tablas automaticamente. Es util mientras no existan migraciones, pero para produccion formal se recomienda crear migraciones y cambiarlo a `false`.
 
 ## Scripts
 
