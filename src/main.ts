@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Tracker Core API')
+    .setTitle('API-Kavak')
     .setDescription(
       'API para integraciones GPS, Wialon, instalaciones y agenda de citas.',
     )
