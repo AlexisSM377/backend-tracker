@@ -9,6 +9,14 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiExcludeEndpoint,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/modules/auth/infrastructure/guards/jwt-auth.guard';
 import { WialonSidInterceptor } from '../../application/wialon-interceptor';
 import { WialonSid } from '../http/wialon-sid';
@@ -24,6 +32,8 @@ interface AuthenticatedRequest extends Request {
   };
 }
 @Controller('wialon')
+@ApiTags('Wialon')
+@ApiBearerAuth('jwt')
 @UseGuards(JwtAuthGuard)
 @UseInterceptors(WialonSidInterceptor)
 export class WialonController {
@@ -33,6 +43,9 @@ export class WialonController {
   ) {}
 
   @Get('retranslators')
+  @ApiExcludeEndpoint()
+  @ApiOperation({ summary: 'Listar retransmisores Wialon' })
+  @ApiResponse({ status: 200, description: 'Listado de retransmisores.' })
   async getRetranslators(
     @WialonSid() sid: string,
   ): Promise<RetranslatorResponseDto[]> {
@@ -46,6 +59,9 @@ export class WialonController {
   }
 
   @Get('retranslators/:name')
+  @ApiExcludeEndpoint()
+  @ApiOperation({ summary: 'Buscar retransmisor Wialon por nombre' })
+  @ApiResponse({ status: 200, description: 'Retransmisores encontrados.' })
   async getRetranslatorByName(
     @Param('name') name: string,
     @WialonSid() sid: string,
@@ -104,6 +120,14 @@ export class WialonController {
   }
 
   @Get('units')
+  @ApiOperation({ summary: 'Listar unidades Wialon' })
+  @ApiQuery({ name: 'search', required: false, example: '*' })
+  @ApiQuery({ name: 'page', required: false, example: 1 })
+  @ApiQuery({ name: 'pageSize', required: false, example: 50 })
+  @ApiResponse({
+    status: 200,
+    description: 'Listado paginado de unidades Wialon.',
+  })
   async getAllUnits(
     @WialonSid() sid: string,
     @Query('search') search?: string,
@@ -147,6 +171,8 @@ export class WialonController {
    * Útil cuando se detectan errores de sesión expirada
    */
   @Post('session/refresh')
+  @ApiOperation({ summary: 'Forzar renovacion de SID Wialon' })
+  @ApiResponse({ status: 201, description: 'Sesion renovada.' })
   async refreshSession(@Req() req: AuthenticatedRequest) {
     const newSid = await this.wialonSessionService.refreshWialonSession(
       req.user.userId,
@@ -162,6 +188,8 @@ export class WialonController {
    * Verificar el estado de la sesión actual de Wialon
    */
   @Get('session/status')
+  @ApiOperation({ summary: 'Verificar estado de sesion Wialon actual' })
+  @ApiResponse({ status: 200, description: 'Estado de sesion.' })
   getSessionStatus(@Req() req: AuthenticatedRequest, @WialonSid() sid: string) {
     return {
       hasValidSid: !!sid,

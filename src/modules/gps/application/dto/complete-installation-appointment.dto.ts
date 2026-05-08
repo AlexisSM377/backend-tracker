@@ -6,24 +6,19 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateGpsInstallationDto {
-  @ApiProperty({ example: '3VW1E2JMXGM123456' })
-  @IsString()
-  @IsNotEmpty()
-  vin: string;
-
+export class CompleteInstallationAppointmentDto {
   @ApiProperty({ example: '863238077362731' })
   @IsString()
   @IsNotEmpty()
   serialNumber: string;
 
-  @ApiProperty({ example: 'Proveedor GPS' })
-  @IsString()
-  @IsNotEmpty()
-  provider: string;
-
-  @ApiPropertyOptional({ example: '2026-05-04T12:00:00.000Z' })
+  @ApiPropertyOptional({ example: '2026-05-10T16:00:00.000Z' })
   @IsOptional()
   @IsDateString()
   installedAt?: string;
+
+  @ApiPropertyOptional({ example: 'Instalacion completada' })
+  @IsOptional()
+  @IsString()
+  notes?: string;
 }
