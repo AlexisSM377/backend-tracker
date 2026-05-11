@@ -17,7 +17,7 @@ import { WialonSidInterceptor } from 'src/modules/wialon-auth/application/wialon
 import { WialonSid } from 'src/modules/wialon-auth/infrastructure/http/wialon-sid';
 import { RecoveryService } from '../../application/services/recovery.service';
 
-@ApiTags('Recovery')
+@ApiTags('Obtener bitacora de recuperacion por VIN/VIM')
 @ApiBearerAuth('jwt')
 @Controller('recovery')
 @UseGuards(JwtAuthGuard)

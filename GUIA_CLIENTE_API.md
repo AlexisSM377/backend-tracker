@@ -2,16 +2,16 @@
 
 Esta guia contiene ejemplos practicos para consumir la API de Tracker Core desde Swagger, Postman o cualquier cliente HTTP.
 
-Base URL local:
+Base URL:
 
 ```text
-http://localhost:3000
+https://kavakv1.trackergps.cloud
 ```
 
 Swagger:
 
 ```text
-http://localhost:3000/api/docs
+https://kavakv1.trackergps.cloud/api/docs
 ```
 
 ## Autenticacion

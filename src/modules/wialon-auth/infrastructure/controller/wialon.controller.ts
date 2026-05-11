@@ -31,7 +31,7 @@ interface AuthenticatedRequest extends Request {
     username: string;
   };
 }
-@Controller('wialon')
+@Controller('Listar unidades Kavak')
 @ApiTags('Wialon')
 @ApiBearerAuth('jwt')
 @UseGuards(JwtAuthGuard)

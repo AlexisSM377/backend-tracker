@@ -38,7 +38,7 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
-@ApiTags('GPS Appointments')
+@ApiTags('Agendar cita de instalacion GPS')
 @ApiBearerAuth('jwt')
 @Controller('gps/appointments')
 @UseGuards(JwtAuthGuard)

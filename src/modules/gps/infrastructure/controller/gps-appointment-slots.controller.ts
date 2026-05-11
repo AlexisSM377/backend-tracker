@@ -25,7 +25,7 @@ import { FindAppointmentSlotsQueryDto } from '../../application/dto/find-appoint
 import { UpdateAppointmentSlotDto } from '../../application/dto/update-appointment-slot.dto';
 import { AppointmentSlotService } from '../../application/services/appointment-slot.service';
 
-@ApiTags('GPS Appointment Slots')
+@ApiTags('Crear disponibilidad de instalacion por proveedor')
 @ApiBearerAuth('jwt')
 @Controller('gps/appointment-slots')
 @UseGuards(JwtAuthGuard)

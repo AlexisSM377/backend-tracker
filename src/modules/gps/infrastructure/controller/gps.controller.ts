@@ -29,7 +29,7 @@ import { NoReportQueryDto } from '../../application/dto/no-report-query.dto';
 import { GpsCommandService } from '../../application/services/gps-command.service';
 import { NoReportService } from '../../application/services/no-report.service';
 
-@ApiTags('GPS')
+@ApiTags('Comandos GPS')
 @ApiBearerAuth('jwt')
 @Controller('gps')
 @UseGuards(JwtAuthGuard)

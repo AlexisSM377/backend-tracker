@@ -4,7 +4,9 @@
 
 El presente documento detalla la interfaz de programación de aplicaciones (API) desarrollada para la gestión, monitoreo y control de unidades GPS.
 
-**URL Base:** `https://api.dominio.com/v1`
+**URL Base:** `https://kavakv1.trackergps.cloud`
+
+**Documentación Swagger:** `https://kavakv1.trackergps.cloud/api/docs`
 
 **Autenticación:** Todos los endpoints requieren un token de tipo `Bearer` en el header `Authorization`.
 
@@ -32,7 +34,7 @@ Envía una instrucción en tiempo real a un dispositivo GPS específico utilizan
 ### Ejemplo de Petición (cURL)
 
 ```bash
-curl -X POST "https://api.dominio.com/v1/gps/commands/block_engine" \
+curl -X POST "https://kavakv1.trackergps.cloud/gps/commands/block_engine" \
      -H "Content-Type: application/json" \
      -H "Authorization: Bearer TU_TOKEN_AQUI" \
      -d '{
@@ -106,7 +108,7 @@ Permite al cliente consultar el listado más reciente de unidades sin reporte.
 ### Ejemplo de Petición (cURL)
 
 ```bash
-curl -X GET "https://api.dominio.com/v1/gps/no-reporta?minMinutes=120" \
+curl -X GET "https://kavakv1.trackergps.cloud/gps/no-reporta?minMinutes=120" \
      -H "Authorization: Bearer TU_TOKEN_AQUI"
 ```
 
@@ -174,7 +176,7 @@ Consulta la ubicación de un vehículo para asistir en su recuperación. El sist
 ### Ejemplo de Petición (cURL)
 
 ```bash
-curl -X GET "https://api.dominio.com/v1/recovery/3VW1E2JMXGM123456" \
+curl -X GET "https://kavakv1.trackergps.cloud/recovery/3VW1E2JMXGM123456" \
      -H "Authorization: Bearer TU_TOKEN_AQUI"
 ```
 
@@ -243,5 +245,3 @@ Cuando el GPS dejó de reportar, se devuelve la lista de sus últimas ubicacione
   "message": "No se encontró ningún vehículo con el VIM 3VW1E2JMXGM123456 en la plataforma."
 }
 ```
-
-

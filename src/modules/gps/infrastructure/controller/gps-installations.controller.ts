@@ -26,7 +26,7 @@ import { CreateGpsInstallationDto } from '../../application/dto/create-gps-insta
 import { FindGpsInstallationsQueryDto } from '../../application/dto/find-gps-installations-query.dto';
 import { GpsInstallationService } from '../../application/services/gps-installation.service';
 
-@ApiTags('GPS Installations')
+@ApiTags('Registrar GPS como instalado')
 @ApiBearerAuth('jwt')
 @Controller('gps/installations')
 @UseGuards(JwtAuthGuard)
